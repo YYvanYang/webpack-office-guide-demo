@@ -5,7 +5,7 @@ import _ from 'lodash';
     var element = document.createElement('div');
    var btn = document.createElement('button');
 
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+    element.innerHTML = _.join(['He222233335555sssllo', 'webpack'], ' ');
 
    btn.innerHTML = 'Click me and check the console!';
    btn.onclick = printMe;
