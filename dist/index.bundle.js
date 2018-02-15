@@ -60,32 +60,53 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 329);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/******/ ({
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
+/***/ 329:
+/***/ (function(module, exports, __webpack_require__) {
 
+/* WEBPACK VAR INJECTION */(function(join) {/*** IMPORTS FROM imports-loader ***/
+(function() {
+
+let { file, parse } = __webpack_require__(332);
+
+console.log('file from export loader:',file)
 
 function component() {
-    var element = document.createElement('div');
+  var element = document.createElement('div');
+
+  element.innerHTML = join(['Hello', 'webpack'], ' ');
+
+  // Assume we are in the context of `window`
+  this.alert("Hmmm, this probably isn't a great idea...");
   
-    // Lodash, now imported by this script
-    element.innerHTML = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.join(['Hello', 'webpack'], ' ');
-  
-    return element;
-  }
-  
-  document.body.appendChild(component());
+
+  return element;
+}
+
+document.body.appendChild(component());
+
+fetch('https://jsonplaceholder.typicode.com/users')
+  .then(response => response.json())
+  .then(json => {
+    console.log(
+      "We retrieved some data! AND we're confident it will work on a variety of browser distributions."
+    );
+    console.log(json);
+  })
+  .catch(error =>
+    console.error('Something went wrong when fetching this data: ', error)
+  );
+
+}.call(window));
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(330)["join"]))
 
 /***/ }),
-/* 1 */
+
+/***/ 330:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -17187,37 +17208,11 @@ function component() {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(3)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49), __webpack_require__(331)(module)))
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 3 */
+/***/ 331:
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -17244,5 +17239,49 @@ module.exports = function(module) {
 };
 
 
+/***/ }),
+
+/***/ 332:
+/***/ (function(module, exports) {
+
+var file = 'blah.txt';
+var helpers = {
+  test: function() { console.log('test something'); },
+  parse: function() { console.log('parse something'); }
+}
+
+/*** EXPORTS FROM exports-loader ***/
+exports["file"] = (file);
+exports["parse"] = (helpers.parse);
+
+/***/ }),
+
+/***/ 49:
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
 /***/ })
-/******/ ]);
+
+/******/ });
