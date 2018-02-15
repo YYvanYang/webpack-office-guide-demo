@@ -1,9 +1,14 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const InlineChunkWebpackPlugin = require('html-webpack-inline-chunk-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
+  output: {
+    filename: '[name].[chunkhash].js',
+    publicPath: '/'
+  },
   devtool: 'source-map', // 避免在生产中使用 inline-*** 和 eval-***，因为它们可以增加 bundle 大小，并降低整体性能。
   plugins: [
     new UglifyJSPlugin({
@@ -16,6 +21,23 @@ module.exports = merge(common, {
       // 因此，例如 process.env.NODE_ENV === 'production' ? '[name].[hash].bundle.js' : '[name].bundle.js' 这样的条件语句，在 webpack 配置文件中，无法按照预期运行。
       // 2. 还要注意，任何位于 /src 的本地代码都可以关联到 process.env.NODE_ENV 环境变量，所以以下检查也是有效的：
       'process.env.NODE_ENV': JSON.stringify('production')
-    })
+    }),
+    // Extract the vendor code
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: module =>
+        module.context && module.context.includes('node_modules')
+    }),
+    // Extract the webpack’s runtime
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'runtime',
+      minChunks: Infinity
+    }),
+    // Inline the webpack’s runtime
+    new InlineChunkWebpackPlugin({
+      inlineChunks: ['runtime']
+    }),
+    // Make module IDs more stable
+    new webpack.HashedModuleIdsPlugin()
   ]
 });

@@ -1,0 +1,12 @@
+.hello {
+    color: #84c6e8;
+    font-size: 48px;
+    .world {
+        color: #1e72b3;
+        font-size: 36px;
+    }
+    background-image: url(./img/glass.svg);
+    background-size: 36px 36px;
+    background-position: center right;
+    background-repeat: round;
+}
